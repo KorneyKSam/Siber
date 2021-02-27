@@ -1,0 +1,27 @@
+﻿@model List<CompanyViewModel>
+@{
+    ViewData["Title"] = "Компании";
+}
+
+<div>
+    <h1 class="name-table">Компании Заказчики</h1>
+    <div class="screen-center">
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th>Компании Заказчики</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in Model)
+            {
+                <tr>
+                    <td>@company.CompanyName</td>
+                    <td>@company.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+</div>

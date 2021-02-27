@@ -39,6 +39,9 @@ namespace Sibers
             configurationExpression.CreateMap<User, SignUpViewModel>();
             configurationExpression.CreateMap<SignUpViewModel, User>();
 
+            configurationExpression.CreateMap<CustomerCompany, CompanyViewModel>();
+            configurationExpression.CreateMap<CompanyViewModel, CustomerCompany>();
+
             var mapperConfiguration = new MapperConfiguration(configurationExpression);
             var mapper = new Mapper(mapperConfiguration);
             services.AddScoped<IMapper>(s => mapper);
@@ -46,7 +49,8 @@ namespace Sibers
 
         public void RegistrationRepository(IServiceCollection services)
         {
-            services.AddScoped<UserRepository>(serviceProvider=> new UserRepository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<UserRepository>(serviceProvider => new UserRepository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<CustomerCompanyRepository>(serviceProvider => new CustomerCompanyRepository(serviceProvider.GetService<DBSibersContext>()));
         }
 
 
