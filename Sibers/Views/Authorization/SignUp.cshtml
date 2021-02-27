@@ -1,0 +1,53 @@
+﻿@model SignUpViewModel
+@{Layout = "";}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div>
+        <div>
+            <form asp-action="SignUp" asp-controller="Authorization" asp-antiforgery="true">
+                <h2>Регистрация</h2>
+                <div>
+                    <label asp-for="Email"></label>
+                    <div>
+                        <i class="fas fa-user"></i>
+                        <input asp-for="Email" placeholder="Email" />
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Login"></label>
+                    <div>
+                        <i class="fas fa-user"></i>
+                        <input asp-for="Login" placeholder="Login" />
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Password"></label>
+                    <div>
+                        <i class="fas fa-lock"></i>
+                        <input type="password" asp-for="Password" placeholder="Password" />
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="DisplayName"></label>
+                    <div>
+                        <i class="fas fa-lock"></i>
+                        <input asp-for="DisplayName" placeholder="DisplayName" />
+                    </div>
+                </div>
+
+                <input type="submit" placeholder="Регистрация" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -53,7 +53,7 @@ header {
                 color: rgb(35, 138, 235);
             }
 
-button {
+.btn-login {
     padding: 5px;
     margin-right: 25px;
     background-color: rgba(35, 138, 235, 1);
@@ -63,7 +63,26 @@ button {
     transition: all 0.3s ease 0s;
 }
 
-    button:hover {
+.logoCube{
+    width: 50vw;
+    height: 50vh;
+    background: url(../image/Cube.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+
+.screenCenter{
+    width:100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+    .btn-login:hover {
         background-color: rgba(35, 138, 235, .8);
     }
 

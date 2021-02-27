@@ -1,15 +1,15 @@
+using AutoMapper;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sibers.DbStuff;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Sibers.DbStuff.Models;
+using Sibers.DbStuff.Repository;
+using Sibers.Models;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Sibers
 {
@@ -25,10 +25,30 @@ namespace Sibers
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = @"Server=NOONE\SQLEXPRESS;Database=Sibers;Trusted_Connection=True;";
+            var connectionString = @"Server=NOONE\SQLEXPRESS;Database=DBSibers;Trusted_Connection=True;";
             services.AddDbContext<DBSibersContext>(option => option.UseSqlServer(connectionString));
+            RegistrationMapper(services);            
+            RegistrationRepository(services);
             services.AddControllersWithViews();
         }
+
+        private void RegistrationMapper(IServiceCollection services)
+        {
+            var configurationExpression = new MapperConfigurationExpression();
+
+            configurationExpression.CreateMap<User, SignUpViewModel>();
+            configurationExpression.CreateMap<SignUpViewModel, User>();
+
+            var mapperConfiguration = new MapperConfiguration(configurationExpression);
+            var mapper = new Mapper(mapperConfiguration);
+            services.AddScoped<IMapper>(s => mapper);
+        }
+
+        public void RegistrationRepository(IServiceCollection services)
+        {
+            services.AddScoped<UserRepository>(serviceProvider=> new UserRepository(serviceProvider.GetService<DBSibersContext>()));
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
