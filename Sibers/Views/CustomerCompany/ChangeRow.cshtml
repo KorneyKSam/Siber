@@ -1,0 +1,24 @@
+﻿@model CustomerCompanyViewModel
+
+<div>
+    <form asp-controller="CustomerCompany" asp-action="ChangeRow" asp-antiforgery="true">
+        <div>
+            <label asp-for="CompanyName"></label>
+            <div>
+                <i class="company-icon"></i>
+                <input asp-for="CompanyName" placeholder="Company" />
+            </div>
+        </div>
+        <div>
+            <label asp-for="Description"></label>
+            <div>
+                <i class="description"></i>
+                <input asp-for="Description" placeholder="Company" />
+            </div>
+        </div>
+        <input type="submit" value="Сохранить" />
+    </form>
+    <form asp-controller="CustomerCompany" asp-action="DeleteRow">
+        <input type="submit" value="Удалить" asp-route-id="Id" />
+    </form>
+</div>

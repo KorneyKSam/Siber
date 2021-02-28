@@ -11,21 +11,18 @@ namespace Sibers.DbStuff
     {
         public DbSet<CustomerCompany> CustomerCompanies { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<EployeeProject> EployeeProjects { get; set; }
+        public DbSet<EmployeeProject> EployeeProjects { get; set; }
         public DbSet<ExecutingCompany> ExecutingCompanies { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<User> Users { get; set; }
 
         public DBSibersContext(DbContextOptions dbContext) : base(dbContext) { }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        //        optionsBuilder.UseSqlServer("Server=NOONE\\SQLEXPRESS;Database=DBSibers;Trusted_Connection=True;");
-        //    }
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,12 +57,12 @@ namespace Sibers.DbStuff
                 entity.Property(e => e.MiddleName).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<EployeeProject>(entity =>
+            modelBuilder.Entity<EmployeeProject>(entity =>
             {
                 entity.HasKey(e => new { e.EmployeeId, e.ProjectId })
                     .HasName("PK_ProjectExecutors");
 
-                entity.ToTable("EployeeProject");
+                entity.ToTable("EmployeeProject");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
 
@@ -74,7 +71,7 @@ namespace Sibers.DbStuff
                 entity.Property(e => e.DateTimeOfCreation).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Employee)
-                    .WithMany(p => p.EployeeProjects)
+                    .WithMany(p => p.EmployeesProjects)
                     .HasForeignKey(d => d.EmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProjectExecutors_Employees");
@@ -92,7 +89,7 @@ namespace Sibers.DbStuff
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Distiption).HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Project>(entity =>
@@ -148,9 +145,10 @@ namespace Sibers.DbStuff
                     .HasMaxLength(50);
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            //OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
-
+        
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

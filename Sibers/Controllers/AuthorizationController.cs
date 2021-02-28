@@ -23,6 +23,7 @@ namespace Sibers.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult SignIn()
         {
             return View();
@@ -48,14 +49,6 @@ namespace Sibers.Controllers
             var user = _mapper.Map<User>(userViewModel);
             _userRepository.Save(user);
             return View();
-        }
-
-        [HttpGet]
-        public IActionResult Profile(long id)
-        {
-            var user = _userRepository.Get(id);
-            var viewModel = _mapper.Map<SignUpViewModel>(user);
-            return View(viewModel);
         }
 
     }

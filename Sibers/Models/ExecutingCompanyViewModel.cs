@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sibers.Models
 {
-    public class CompanyViewModel
+    public class ExecutingCompanyViewModel
     {
         public string CompanyName { get; set; }
         public string Description { get; set; }

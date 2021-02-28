@@ -26,9 +26,15 @@ namespace Sibers.DbStuff.Repository
             return _dbSet.ToList();
         }
 
-        public void Save(Model user)
+        public void Save(Model model)
         {
-            _dbSet.Add(user);
+            if (model.Id > 0)
+            {
+                _dbSet.Update(model);
+                _context.SaveChanges();
+                return;
+            }
+            _dbSet.Add(model);  
             _context.SaveChanges();
         }
 

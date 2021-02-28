@@ -9,7 +9,7 @@ namespace Sibers.DbStuff.Models
     {
         public Employee()
         {
-            EployeeProjects = new HashSet<EployeeProject>();
+            EmployeesProjects = new HashSet<EmployeeProject>();
         }
 
         public string LastName { get; set; }
@@ -19,6 +19,6 @@ namespace Sibers.DbStuff.Models
         public int Company { get; set; }
         public DateTime DateTimeOfCreation { get; set; }
 
-        public virtual ICollection<EployeeProject> EployeeProjects { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeesProjects { get; set; }
     }
 }

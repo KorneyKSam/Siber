@@ -1,18 +1,46 @@
-﻿* {
+﻿@font-face {
+    font-family: 'SiteFont';
+    src: url(../)
+}
+
+* {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
 }
 
-li,
-a,
-button {
-    font-family: 'Courier New', Courier, monospace;
+.white-oswald {
+    font-family: 'Oswald', Courier New, Courier;
     font-weight: 500;
     font-size: 16px;
     color: white;
     text-decoration: none;
+    text-transform: uppercase;
 }
+
+.blue-background {
+    background-color: rgba(35, 138, 235, 1);
+}
+
+.blue-btn {
+    padding: 10px;
+    margin-right: 25px;
+    background-color: rgba(35, 138, 235, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+    .blue-btn:hover {
+        background-color: rgba(35, 138, 235, .8);
+    }
+
+
+.highlight:hover {
+    color: rgb(35, 138, 235);
+}
+
 
 header {
     height: 10vh;
@@ -33,42 +61,45 @@ header {
     margin: 5px;
 }
 
-.nav_links {
+.navigation-list {
     width: auto;
     list-style: none;
     padding: 0px 0px;
+    position: relative;
 }
 
-    .nav_links li {
+    .navigation-list li {
         display: inline-block;
         margin: 0px 40px;
     }
 
-        .nav_links li a {
-            transition: all 0.3s ease 0s;
-            text-transform: uppercase;
-        }
+    .navigation-list ul.dropdown-content {
+        background: black;
+        padding: 5px;
+        position: absolute;
+        top: 29px;
+        left: -9999px;
+        z-index: 3;
+        border-top: 2px solid rgb(35, 138, 235);
+        box-shadow: 0px 3px 7px #251d1b;
+    }
 
-            .nav_links li a:hover {
-                color: rgb(35, 138, 235);
-            }
+    .navigation-list li:hover ul.dropdown-content {
+        left: auto;
+    }
 
-.btn-login {
-    padding: 10px;
-    margin-right: 25px;
-    background-color: rgba(35, 138, 235, 1);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-}
+    .navigation-list li a.dropdown-text {
+        display: block;
+        padding: 5px;
+    }
 
-    .btn-login:hover {
-        background-color: rgba(35, 138, 235, .8);
+    .navigation-list li:hover a.dropdown-text {
+        cursor: pointer;
+        /*background: white;*/
     }
 
 
-.logoCube {
+#logoCube {
     width: 50vw;
     height: 50vh;
     background: url(../image/Cube.png);
@@ -77,52 +108,71 @@ header {
     background-position: center;
 }
 
-.name-table {
+#table-title {
     color: rgb(0, 122, 204);
     text-align: center;
+    font-family: Oswald;
     margin: 15px;
-    border-bottom: 2px solid rgba(35, 138, 235, .7);
+    /*border-bottom: 2px solid rgba(35, 138, 235, .7);*/
+    text-transform: uppercase;
 }
 
-.content-table {
+
+#table-wrapper {
+    position: relative;
+}
+
+#table-scroll {
+    max-height: 65vh;
+    overflow: auto;
+    margin-top: 20px;
+}
+
+
+#table-wrapper table {
+    width: 100%;
+}
+
+
+.table-content {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
-    overflow: hidden;
+    overflow: auto;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
-    .content-table thead tr {
-        background-color: rgba(35, 138, 235, .7);
-        color: white;
-        text-align: left;
-        font-weight: bold;
-    }
-
-    .content-table th,
-    .content-table td{
+    .table-content th,
+    .table-content td {
         padding: 12px 15px;
     }
 
-    .content-table tbody tr{
+    .table-content tbody tr {
         border-bottom: 1px solid #dddddd;
     }
 
-    .content-table tbody tr:nth-of-type(even){
-        background-color: #f3f3f3;
-    }
+        .table-content tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
 
-        .content-table tbody tr:last-of-type {
+        .table-content tbody tr:last-of-type {
             border-bottom: 2px solid rgba(35, 138, 235, .7);
         }
 
-        .content-table tbody tr:hover {
-            color: rgba(35, 138, 235, .7);
-        }
+.table-text {
+    font-family: sans-serif;
+    text-decoration: none;
+    color: black;
+}
 
-.screen-center {
+    .table-text:hover {
+        font-weight: bold;
+        color: rgb(28, 110, 188);
+    }
+
+.tends-to-center {
     width: 100%;
     height: 100%;
     display: flex;
@@ -130,7 +180,12 @@ header {
     align-items: center;
 }
 
-
+.sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    z-index:10;
+}
 
 main {
     height: 80vh;

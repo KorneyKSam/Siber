@@ -1,0 +1,47 @@
+﻿@model List<CustomerCompanyViewModel>
+@{
+    ViewData["Title"] = "Компании Исполнители";
+}
+
+<div>
+    <h1 id="table-title">Компании Исполнители</h1>
+    <div class="tends-to-center" id="table-wrapper">
+        <div id="table-scroll">
+            <table class="table-content">
+                <thead id="table-head">
+                    <tr class="sticky white-oswald blue-background">
+                        <th>Название Компании</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        @foreach (var company in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a class="table-text" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
+                                        @company.CompanyName
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="table-text" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
+                                        @company.Description
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="last-row">
+                            <a class="table-text" asp-controller="CustomerCompany" asp-action="ChangeRow">Создать новую запись</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

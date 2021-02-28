@@ -12,7 +12,7 @@ namespace Sibers.DbStuff.Models
             Projects = new HashSet<Project>();
         }
         public string CompanyName { get; set; }
-        public string Distiption { get; set; }
+        public string Description { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
     }

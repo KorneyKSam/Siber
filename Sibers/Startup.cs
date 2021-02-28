@@ -39,8 +39,18 @@ namespace Sibers
             configurationExpression.CreateMap<User, SignUpViewModel>();
             configurationExpression.CreateMap<SignUpViewModel, User>();
 
-            configurationExpression.CreateMap<CustomerCompany, CompanyViewModel>();
-            configurationExpression.CreateMap<CompanyViewModel, CustomerCompany>();
+            configurationExpression.CreateMap<CustomerCompany, CustomerCompanyViewModel>();
+            configurationExpression.CreateMap<CustomerCompanyViewModel, CustomerCompany>();
+
+            configurationExpression.CreateMap<ExecutingCompany, ExecutingCompanyViewModel>();
+            configurationExpression.CreateMap<ExecutingCompanyViewModel, ExecutingCompany>();
+
+            configurationExpression.CreateMap<Employee, EmployeeViewModel>();
+            configurationExpression.CreateMap<EmployeeViewModel, Employee>();
+
+
+            configurationExpression.CreateMap<Project, ProjectViewModel>();
+            configurationExpression.CreateMap<ProjectViewModel, Project>();
 
             var mapperConfiguration = new MapperConfiguration(configurationExpression);
             var mapper = new Mapper(mapperConfiguration);
@@ -51,6 +61,9 @@ namespace Sibers
         {
             services.AddScoped<UserRepository>(serviceProvider => new UserRepository(serviceProvider.GetService<DBSibersContext>()));
             services.AddScoped<CustomerCompanyRepository>(serviceProvider => new CustomerCompanyRepository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<EmployeeRepository>(serviceProvider => new EmployeeRepository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<ProjectRepository>(serviceProvider => new ProjectRepository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<ExecutingCompanyRepository>(serviceProvider => new ExecutingCompanyRepository(serviceProvider.GetService<DBSibersContext>()));
         }
 
 

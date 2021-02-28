@@ -1,0 +1,44 @@
+﻿@model List<ProjectViewModel>
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<div>
+    <h1 class="name-table">Сотрудники</h1>
+    <div class="screen-center">
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Название проекта</th>
+                    <th>Компания исполнитель</th>
+                    <th>Компания заказчик</th>
+                    <th>Приоритет</th>
+                    <th>Дата начала</th>
+                    <th>Дата окончания</th>
+                    <th>Руководитель проекта</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.ProjectName</td>
+                            <td>@project.CustomerCompanyId</td>
+                            <td>@project.ExecutingCompanyId</td>
+                            <td>@project.ProjectPriority</td>
+                            <td>@project.StartDate</td>
+                            <td>@project.EndDate</td>
+                            <td>@project.ProjectLeaderId</td>
+                        </tr>
+                    }
+                }
+                <tr class="last-row">
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

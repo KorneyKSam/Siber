@@ -8,7 +8,7 @@ namespace Sibers.Controllers
 {
     public class LeadersController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Table()
         {
             return View();
         }

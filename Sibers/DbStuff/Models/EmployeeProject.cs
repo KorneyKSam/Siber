@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Sibers.DbStuff.Models
 {
-    public partial class EployeeProject
+    public partial class EmployeeProject
     {
         public long EmployeeId { get; set; }
         public long ProjectId { get; set; }
