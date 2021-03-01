@@ -8,6 +8,7 @@ namespace Sibers.Models
 {
     public class ProjectViewModel
     {
+        public long Id { get; set; }
         public string ProjectName { get; set; }
         public long CustomerCompanyId { get; set; }
         public long ExecutingCompanyId { get; set; }
@@ -15,5 +16,12 @@ namespace Sibers.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int ProjectLeaderId { get; set; }
+
+        public DateTime DateTimeOfCreation { get; set; }
+
+        public EmployeeViewModel ProjectLeader { get; set; }
+        public CustomerCompanyViewModel CustomerCompany { get; set; }
+        public ExecutingCompanyViewModel ExecutingCompany { get; set; }
+
     }
 }

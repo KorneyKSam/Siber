@@ -52,6 +52,9 @@ namespace Sibers
             configurationExpression.CreateMap<Project, ProjectViewModel>();
             configurationExpression.CreateMap<ProjectViewModel, Project>();
 
+            configurationExpression.CreateMap<Project, ProjectInfoViewModel>();
+            configurationExpression.CreateMap<ProjectInfoViewModel, Project>();
+
             var mapperConfiguration = new MapperConfiguration(configurationExpression);
             var mapper = new Mapper(mapperConfiguration);
             services.AddScoped<IMapper>(s => mapper);

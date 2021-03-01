@@ -1,0 +1,20 @@
+﻿@model EmployeeViewModel
+
+<div class="tends-to-center">
+    <form class="form-group blue-border" asp-controller="Employees" asp-action="DeleteRow" asp-antiforgery="true">
+        <div class="static-field white-oswald blue-background">Фамилия</div>
+        <div class="field">@Model.LastName</div>
+        <div class="static-field white-oswald blue-background">Имя</div>
+        <div class="field">@Model.FirstName</div>
+        <div class="static-field white-oswald blue-background">Отчество</div>
+        <div class="field">@Model.MiddleName</div>
+        <div class="static-field white-oswald blue-background">Почта</div>
+        <div class="field">@Model.Email</div>
+        <div class="static-field white-oswald blue-background">Компания</div>
+        <div class="field">@Model.CustomerCompany.CompanyName</div>
+        <div class="dialog-buttons tends-to-center">
+            <input class="white-oswald blue-btn" type="submit" value="Удалить" />
+            <a class="white-oswald blue-btn" asp-action="Table">Отменить</a>
+        </div>
+    </form>
+</div>

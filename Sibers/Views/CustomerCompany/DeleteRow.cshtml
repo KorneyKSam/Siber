@@ -1,0 +1,14 @@
+﻿@model CustomerCompanyViewModel
+
+<div class="tends-to-center">
+    <form class="form-group blue-border" asp-controller="CustomerCompany" asp-action="DeleteRow" asp-antiforgery="true">
+        <div class="static-field white-oswald blue-background">Компания</div>
+        <div class="field">@Model.CompanyName</div>
+        <div class="static-field white-oswald blue-background">Описание</div>
+        <div class="field">@Model.Description</div>
+        <div class="dialog-buttons tends-to-center">
+            <input class="white-oswald blue-btn" type="submit" value="Удалить" />
+            <a class="white-oswald blue-btn" asp-action="Table">Отменить</a>
+        </div>
+    </form>
+</div>

@@ -1,34 +1,51 @@
 ﻿@model List<ExecutingCompanyViewModel>
 @{
-    ViewData["Title"] = "Компании";
+    ViewData["Title"] = "Компании исполнители";
 }
 
 <div>
-    <h1 class="name-table">Компании Заказчики</h1>
-    <div class="screen-center">
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th>Компании Заказчики</th>
-                    <th>Описание</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    @foreach (var company in Model)
+    <h1 id="table-title">Компании исполнители</h1>
+    <div class="tends-to-center" id="table-wrapper">
+        <div id="table-scroll">
+            <table class="table-content">
+                <thead id="table-head">
+                    <tr class="sticky white-oswald blue-background">
+                        <th>Название Компании</th>
+                        <th>Описание</th>
+                        <th />
+                        <th />
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
                     {
-                        <tr>
-                            <td>@company.CompanyName</td>
-                            <td>@company.Description</td>
-                        </tr>
+                        @foreach (var company in Model)
+                        {
+                            <tr>
+                                <td class="table-text">@company.CompanyName</td>
+                                <td class="table-text">@company.Description</td>
+                                <td>
+                                    <a class="table-change-row" asp-controller="ExecutingCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
+                                        +
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="table-delete-row" asp-controller="ExecutingCompany" asp-action="DeleteRow" asp-route-id="@company.Id">
+                                        -
+                                    </a>
+                                </td>
+                            </tr>
+                        }
                     }
-                }
-                <tr class="last-row">
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="last-row">
+                            <a class="table-text" asp-controller="ExecutingCompany" asp-action="ChangeRow">Создать новую запись</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>

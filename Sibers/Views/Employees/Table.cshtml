@@ -4,7 +4,7 @@
 }
 
 <div>
-    <h1 class="table-title">Сотрудники</h1>
+    <h1 id="table-title">Сотрудники</h1>
     <div class="tends-to-center" id="table-wrapper">
         <div id="table-scroll">
             <table class="table-content">
@@ -15,6 +15,8 @@
                         <th>Отчество</th>
                         <th>Почта</th>
                         <th>Компания</th>
+                        <th />
+                        <th />
                     </tr>
                 </thead>
                 <tbody>
@@ -23,16 +25,21 @@
                         @foreach (var employee in Model)
                         {
                             <tr>
+                                <td class="table-text">@employee.LastName</td>
+                                <td class="table-text">@employee.FirstName</td>
+                                <td class="table-text">@employee.MiddleName</td>
+                                <td class="table-text">@employee.Email</td>
+                                <td class="table-text">@employee.CustomerCompany.CompanyName</td>
                                 <td>
-                                    <a class="table-text" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@employee.Id">
-                                        @employee.LastName
+                                    <a class="table-change-row" asp-controller="Employees" asp-action="ChangeRow" asp-route-id="@employee.Id">
+                                        +
                                     </a>
                                 </td>
-                                <td>@employee.LastName</td>
-                                <td>@employee.LastName</td>
-                                <td>@employee.MiddleName</td>
-                                <td>@employee.Email</td>
-                                <td>@employee.Company</td>
+                                <td>
+                                    <a class="table-delete-row" asp-controller="Employees" asp-action="DeleteRow" asp-route-id="@employee.Id">
+                                        -
+                                    </a>
+                                </td>
                             </tr>
                         }
                     }

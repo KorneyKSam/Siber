@@ -1,0 +1,39 @@
+﻿@model EmployeeViewModel
+
+<div class="tends-to-center">
+    <form class="form-group blue-border" asp-controller="Employees" asp-action="ChangeRow" asp-antiforgery="true">
+        <div>
+
+            <div class="static-field white-oswald blue-background">Фамилия</div>
+            <div class="field">
+                <input asp-for="LastName" placeholder="Введите фамилию" />
+            </div>
+
+            <div class="static-field white-oswald blue-background">Имя</div>
+            <div class="field">
+                <input asp-for="FirstName" placeholder="Введите имя" />
+            </div>
+
+            <div class="static-field white-oswald blue-background">Отчество</div>
+            <div class="field">
+                <input asp-for="MiddleName" placeholder="Введите отчество" />
+            </div>
+
+            <div class="static-field white-oswald blue-background">Почта</div>
+            <div class="field">
+                <input asp-for="Email" placeholder="Введите почту" />
+            </div>
+
+            <div class="static-field white-oswald blue-background">Компания</div>
+            <div class="field">
+                <select asp-for="Company" asp-items="@(new SelectList(@ViewBag.Companies, "Id", "CompanyName"))">
+                </select>
+            </div>
+
+            <div class="dialog-buttons tends-to-center">
+                <input class="white-oswald blue-btn" type="submit" value="Сохранить" />
+                <a class="white-oswald blue-btn" asp-action="Table">Отменить</a>
+            </div>
+        </div>
+    </form>
+</div>

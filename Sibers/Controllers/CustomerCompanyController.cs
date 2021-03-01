@@ -50,10 +50,19 @@ namespace Sibers.Controllers
             return RedirectToAction("Table");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult DeleteRow(long id)
         {
-            _customerCompanyRepository.Delete(id);
+            var company = _customerCompanyRepository.Get(id);
+            var viewModel = _mapper.Map<CustomerCompanyViewModel>(company);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteRow(CustomerCompanyViewModel viewModel)
+        {
+            var company = _mapper.Map<CustomerCompany>(viewModel);
+            _customerCompanyRepository.Delete(company);
             return RedirectToAction("Table");
         }
 

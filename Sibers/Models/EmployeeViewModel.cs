@@ -12,6 +12,9 @@ namespace Sibers.Models
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Email { get; set; }
-        public int Company { get; set; }
+        public long Company { get; set; }
+
+        public DateTime DateTimeOfCreation { get; set; }
+        public CustomerCompanyViewModel CustomerCompany { get; set; }
     }
 }

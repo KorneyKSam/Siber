@@ -9,7 +9,7 @@ namespace Sibers.DbStuff.Models
     {
         public Project()
         {
-            EployeeProjects = new HashSet<EmployeeProject>();
+            EmployeeProjects = new HashSet<EmployeeProject>();
         }
 
         public string ProjectName { get; set; }
@@ -18,11 +18,12 @@ namespace Sibers.DbStuff.Models
         public int ProjectPriority { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int ProjectLeaderId { get; set; }
+        public long ProjectLeaderId { get; set; }
         public DateTime DateTimeOfCreation { get; set; }
 
         public virtual CustomerCompany CustomerCompany { get; set; }
         public virtual ExecutingCompany ExecutingCompany { get; set; }
-        public virtual ICollection<EmployeeProject> EployeeProjects { get; set; }
+        public virtual Employee ProjectLeader { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeeProjects { get; set; }
     }
 }

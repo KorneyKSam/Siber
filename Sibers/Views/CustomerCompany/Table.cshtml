@@ -1,10 +1,10 @@
 ﻿@model List<CustomerCompanyViewModel>
 @{
-    ViewData["Title"] = "Компании Исполнители";
+    ViewData["Title"] = "Компании заказчики";
 }
 
 <div>
-    <h1 id="table-title">Компании Исполнители</h1>
+    <h1 id="table-title">Компании заказчики</h1>
     <div class="tends-to-center" id="table-wrapper">
         <div id="table-scroll">
             <table class="table-content">
@@ -12,6 +12,8 @@
                     <tr class="sticky white-oswald blue-background">
                         <th>Название Компании</th>
                         <th>Описание</th>
+                        <th />
+                        <th />
                     </tr>
                 </thead>
                 <tbody>
@@ -20,14 +22,16 @@
                         @foreach (var company in Model)
                         {
                             <tr>
+                                <td class="table-text">@company.CompanyName</td>
+                                <td class="table-text">@company.Description</td>
                                 <td>
-                                    <a class="table-text" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
-                                        @company.CompanyName
+                                    <a class="table-change-row" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
+                                        +
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="table-text" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
-                                        @company.Description
+                                    <a class="table-delete-row" asp-controller="CustomerCompany" asp-action="DeleteRow" asp-route-id="@company.Id">
+                                        -
                                     </a>
                                 </td>
                             </tr>

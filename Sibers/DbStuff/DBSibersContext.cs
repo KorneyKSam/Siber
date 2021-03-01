@@ -55,6 +55,12 @@ namespace Sibers.DbStuff
                     .HasMaxLength(50);
 
                 entity.Property(e => e.MiddleName).HasMaxLength(50);
+
+                entity.HasOne(d => d.CustomerCompany)
+                      .WithMany(p => p.Employees)
+                      .HasForeignKey(d => d.Company)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_Employees_CustomerCompanies");
             });
 
             modelBuilder.Entity<EmployeeProject>(entity =>
@@ -77,10 +83,11 @@ namespace Sibers.DbStuff
                     .HasConstraintName("FK_ProjectExecutors_Employees");
 
                 entity.HasOne(d => d.Project)
-                    .WithMany(p => p.EployeeProjects)
+                    .WithMany(p => p.EmployeeProjects)
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProjectExecutors_Projects");
+
             });
 
             modelBuilder.Entity<ExecutingCompany>(entity =>
@@ -121,6 +128,13 @@ namespace Sibers.DbStuff
                     .HasForeignKey(d => d.ExecutingCompanyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Projects_ExecutingCompanies");
+
+                entity.HasOne(d => d.ProjectLeader)
+                    .WithMany(p => p.Projects)
+                    .HasForeignKey(d => d.ProjectLeaderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Projects_Employees");
+
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -148,7 +162,7 @@ namespace Sibers.DbStuff
             //OnModelCreatingPartial(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
-        
+
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

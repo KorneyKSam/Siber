@@ -1,1 +1,22 @@
-﻿
+﻿@model ExecutingCompanyViewModel
+
+<div class="tends-to-center">
+    <form class="form-group blue-border" asp-controller="ExecutingCompany" asp-action="ChangeRow" asp-antiforgery="true">
+        <div>
+            <div class="static-field white-oswald blue-background">Компания</div>
+            <div class="field">
+                <input asp-for="CompanyName" placeholder="Company" />
+            </div>
+
+            <div class="static-field white-oswald blue-background">Описание</div>
+            <div class="field">
+                <input asp-for="Description" placeholder="Company" />
+            </div>
+
+            <div class="dialog-buttons tends-to-center">
+                <input class="white-oswald blue-btn" type="submit" value="Сохранить" />
+                <a class="white-oswald blue-btn" asp-action="Table">Отменить</a>
+            </div>
+        </div>
+    </form>
+</div>

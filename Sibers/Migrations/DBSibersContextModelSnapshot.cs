@@ -48,8 +48,8 @@ namespace Sibers.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Company")
-                        .HasColumnType("int");
+                    b.Property<long>("Company")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DateTimeOfCreation")
                         .HasColumnType("datetime");
@@ -75,6 +75,8 @@ namespace Sibers.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Company");
 
                     b.ToTable("Employees");
                 });
@@ -142,8 +144,8 @@ namespace Sibers.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("ExecutingCompanyID");
 
-                    b.Property<int>("ProjectLeaderId")
-                        .HasColumnType("int")
+                    b.Property<long>("ProjectLeaderId")
+                        .HasColumnType("bigint")
                         .HasColumnName("ProjectLeaderID");
 
                     b.Property<string>("ProjectName")
@@ -162,6 +164,8 @@ namespace Sibers.Migrations
                     b.HasIndex("CustomerCompanyId");
 
                     b.HasIndex("ExecutingCompanyId");
+
+                    b.HasIndex("ProjectLeaderId");
 
                     b.ToTable("Projects");
                 });
@@ -199,6 +203,17 @@ namespace Sibers.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Sibers.DbStuff.Models.Employee", b =>
+                {
+                    b.HasOne("Sibers.DbStuff.Models.CustomerCompany", "CustomerCompany")
+                        .WithMany("Employees")
+                        .HasForeignKey("Company")
+                        .HasConstraintName("FK_Employees_CustomerCompanies")
+                        .IsRequired();
+
+                    b.Navigation("CustomerCompany");
+                });
+
             modelBuilder.Entity("Sibers.DbStuff.Models.EmployeeProject", b =>
                 {
                     b.HasOne("Sibers.DbStuff.Models.Employee", "Employee")
@@ -232,19 +247,31 @@ namespace Sibers.Migrations
                         .HasConstraintName("FK_Projects_ExecutingCompanies")
                         .IsRequired();
 
+                    b.HasOne("Sibers.DbStuff.Models.Employee", "ProjectLeader")
+                        .WithMany("Projects")
+                        .HasForeignKey("ProjectLeaderId")
+                        .HasConstraintName("FK_Projects_Employees")
+                        .IsRequired();
+
                     b.Navigation("CustomerCompany");
 
                     b.Navigation("ExecutingCompany");
+
+                    b.Navigation("ProjectLeader");
                 });
 
             modelBuilder.Entity("Sibers.DbStuff.Models.CustomerCompany", b =>
                 {
+                    b.Navigation("Employees");
+
                     b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Sibers.DbStuff.Models.Employee", b =>
                 {
                     b.Navigation("EmployeesProjects");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Sibers.DbStuff.Models.ExecutingCompany", b =>

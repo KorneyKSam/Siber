@@ -21,7 +21,7 @@ namespace Sibers.DbStuff.Repository
             return _dbSet.SingleOrDefault(x => x.Id == id);
         }
 
-        public List<Model> GetAll()
+        public virtual List<Model> GetAll()
         {
             return _dbSet.ToList();
         }
@@ -42,6 +42,12 @@ namespace Sibers.DbStuff.Repository
         {
             var model = Get(id);
             _dbSet.Remove(model);
+            _context.SaveChanges();
+        }
+        public void Delete(Model model)
+        {
+            _dbSet.Remove(model);
+            _context.SaveChanges();
         }
     }
 }

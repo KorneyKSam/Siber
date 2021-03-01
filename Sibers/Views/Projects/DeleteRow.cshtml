@@ -1,0 +1,26 @@
+﻿@model ProjectViewModel
+
+<div class="tends-to-center">
+    <form class="form-group blue-border" asp-controller="Projects" asp-action="DeleteRow" asp-antiforgery="true">
+
+        <div class="static-field white-oswald blue-background">Название проекта</div>
+        <div class="field">@Model.ProjectName</div>
+        <div class="static-field white-oswald blue-background">Компания исполнитель</div>
+        <div class="field">@Model.ExecutingCompany.CompanyName</div>
+        <div class="static-field white-oswald blue-background">Компания заказчик</div>
+        <div class="field">@Model.CustomerCompany.CompanyName</div>
+        <div class="static-field white-oswald blue-background">Приоритет</div>
+        <div class="field">@Model.ProjectPriority</div>
+        <div class="static-field white-oswald blue-background">Дата начала</div>
+        <div class="field">@Model.StartDate</div>
+        <div class="static-field white-oswald blue-background">Дата окончания</div>
+        <div class="field">@Model.EndDate</div>
+        <div class="static-field white-oswald blue-background">Руководитель проекта</div>
+        <div class="field">@Model.ProjectLeader.LastName @Model.ProjectLeader.FirstName @Model.ProjectLeader.MiddleName</div>
+
+        <div class="dialog-buttons tends-to-center">
+            <input class="white-oswald blue-btn" type="submit" value="Удалить" />
+            <a class="white-oswald blue-btn" asp-action="Table">Отменить</a>
+        </div>
+    </form>
+</div>
