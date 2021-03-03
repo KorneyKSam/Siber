@@ -33,8 +33,8 @@ namespace Sibers.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -115,8 +115,8 @@ namespace Sibers.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -205,13 +205,13 @@ namespace Sibers.Migrations
 
             modelBuilder.Entity("Sibers.DbStuff.Models.Employee", b =>
                 {
-                    b.HasOne("Sibers.DbStuff.Models.CustomerCompany", "CustomerCompany")
+                    b.HasOne("Sibers.DbStuff.Models.ExecutingCompany", "ExecutingCompany")
                         .WithMany("Employees")
                         .HasForeignKey("Company")
-                        .HasConstraintName("FK_Employees_CustomerCompanies")
+                        .HasConstraintName("FK_Employee_ExecutingCompany")
                         .IsRequired();
 
-                    b.Navigation("CustomerCompany");
+                    b.Navigation("ExecutingCompany");
                 });
 
             modelBuilder.Entity("Sibers.DbStuff.Models.EmployeeProject", b =>
@@ -223,7 +223,7 @@ namespace Sibers.Migrations
                         .IsRequired();
 
                     b.HasOne("Sibers.DbStuff.Models.Project", "Project")
-                        .WithMany("EployeeProjects")
+                        .WithMany("EmployeeProjects")
                         .HasForeignKey("ProjectId")
                         .HasConstraintName("FK_ProjectExecutors_Projects")
                         .IsRequired();
@@ -262,8 +262,6 @@ namespace Sibers.Migrations
 
             modelBuilder.Entity("Sibers.DbStuff.Models.CustomerCompany", b =>
                 {
-                    b.Navigation("Employees");
-
                     b.Navigation("Projects");
                 });
 
@@ -276,12 +274,14 @@ namespace Sibers.Migrations
 
             modelBuilder.Entity("Sibers.DbStuff.Models.ExecutingCompany", b =>
                 {
+                    b.Navigation("Employees");
+
                     b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Sibers.DbStuff.Models.Project", b =>
                 {
-                    b.Navigation("EployeeProjects");
+                    b.Navigation("EmployeeProjects");
                 });
 #pragma warning restore 612, 618
         }

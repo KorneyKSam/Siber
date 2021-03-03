@@ -11,7 +11,7 @@ namespace Sibers.DbStuff.Repository
 
         public override List<Employee> GetAll()
         {
-            return _dbSet.Include(employee => employee.CustomerCompany).ToList();
+            return _dbSet.Include(employee => employee.ExecutingCompany).ToList();
         }
 
         public string GetFullName(long id) 

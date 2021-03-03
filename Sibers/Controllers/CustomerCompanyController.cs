@@ -46,8 +46,14 @@ namespace Sibers.Controllers
         [HttpPost]
         public IActionResult ChangeRow(CustomerCompanyViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
             var company = _mapper.Map<CustomerCompany>(viewModel);
-            _customerCompanyRepository.Save(company);
+            var message = _customerCompanyRepository.Save(company);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("Table");
         }
 
@@ -63,7 +69,9 @@ namespace Sibers.Controllers
         public IActionResult DeleteRow(CustomerCompanyViewModel viewModel)
         {
             var company = _mapper.Map<CustomerCompany>(viewModel);
-            _customerCompanyRepository.Delete(company);
+            var message = _customerCompanyRepository.Delete(company);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("Table");
         }
 

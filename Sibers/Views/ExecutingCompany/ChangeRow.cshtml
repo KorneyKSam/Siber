@@ -7,11 +7,12 @@
             <div class="static-field white-oswald blue-background">Компания</div>
             <div class="field">
                 <input asp-for="CompanyName" placeholder="Company" />
+                <span>@Html.ValidationMessageFor(x => x.CompanyName)</span>
             </div>
-
             <div class="static-field white-oswald blue-background">Описание</div>
             <div class="field">
                 <input asp-for="Description" placeholder="Company" />
+                <span>@Html.ValidationMessageFor(x => x.Description)</span>
             </div>
 
             <div class="dialog-buttons tends-to-center">

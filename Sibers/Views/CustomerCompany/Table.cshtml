@@ -26,14 +26,16 @@
                                 <td class="table-text">@company.CompanyName</td>
                                 <td class="table-text">@company.Description</td>
                                 <td>
-                                    <a class="table-change-row" asp-controller="CustomerCompany" asp-action="ChangeRow" asp-route-id="@company.Id">
-                                        +
-                                    </a>
+                                    <a class="change" 
+                                       asp-controller="CustomerCompany" 
+                                       asp-action="ChangeRow"
+                                       asp-route-id="@company.Id">Изменить</a>
                                 </td>
                                 <td>
-                                    <a class="table-delete-row" asp-controller="CustomerCompany" asp-action="DeleteRow" asp-route-id="@company.Id">
-                                        -
-                                    </a>
+                                    <a class="delete"
+                                       asp-controller="CustomerCompany"
+                                       asp-action="DeleteRow"
+                                       asp-route-id="@company.Id">Удалить</a>
                                 </td>
                             </tr>
                         }

@@ -38,19 +38,22 @@
                                     <td>@project.EndDate</td>
                                     <td>@project.ProjectLeader.LastName @project.ProjectLeader.FirstName @project.ProjectLeader.MiddleName</td>
                                     <td>
-                                        <a class="table-change-row" asp-controller="Projects" asp-action="ChangeRow" asp-route-id="@project.Id">
-                                            +
-                                        </a>
+                                        <a class="change" 
+                                           asp-controller="Projects" 
+                                           asp-action="ChangeRow" 
+                                           asp-route-id="@project.Id">Изменить</a>
                                     </td>
                                     <td>
-                                        <a class="table-delete-row" asp-controller="Projects" asp-action="DeleteRow" asp-route-id="@project.Id">
-                                            -
-                                        </a>
+                                        <a class="delete" 
+                                           asp-controller="Projects" 
+                                           asp-action="DeleteRow" 
+                                           asp-route-id="@project.Id">Удалить</a>
                                     </td>
                                     <td>
-                                        <a class="table-info-row" asp-controller="Projects" asp-action="ProjectEmployees" asp-route-projectId="@project.Id">
-                                            ?
-                                        </a>
+                                        <a class="info" 
+                                           asp-controller="Projects" 
+                                           asp-action="ProjectEmployees" 
+                                           asp-route-projectId="@project.Id">Сотрудники</a>
                                     </td>
                                 </tr>
                             }

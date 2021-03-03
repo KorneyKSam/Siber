@@ -30,16 +30,18 @@
                                 <td class="table-text">@employee.FirstName</td>
                                 <td class="table-text">@employee.MiddleName</td>
                                 <td class="table-text">@employee.Email</td>
-                                <td class="table-text">@employee.CustomerCompany.CompanyName</td>
+                                <td class="table-text">@employee.ExecutingCompany.CompanyName</td>
                                 <td>
-                                    <a class="table-change-row" asp-controller="Employees" asp-action="ChangeRow" asp-route-id="@employee.Id">
-                                        +
-                                    </a>
+                                    <a class="change" 
+                                       asp-controller="Employees" 
+                                       asp-action="ChangeRow" 
+                                       asp-route-id="@employee.Id">Изменить</a>
                                 </td>
                                 <td>
-                                    <a class="table-delete-row" asp-controller="Employees" asp-action="DeleteRow" asp-route-id="@employee.Id">
-                                        -
-                                    </a>
+                                    <a class="delete" 
+                                       asp-controller="Employees" 
+                                       asp-action="DeleteRow" 
+                                       asp-route-id="@employee.Id">Удалить</a>
                                 </td>
                             </tr>
                         }
@@ -49,6 +51,8 @@
                     <tr>
                         <td class="last-row">
                             <a class="table-text" asp-controller="Employees" asp-action="ChangeRow">Создать новую запись</a>
+                        </td>
+                        <td>
                         </td>
                     </tr>
                 </tfoot>

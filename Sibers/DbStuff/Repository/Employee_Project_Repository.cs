@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Sibers.DbStuff.Repository
 {
@@ -28,33 +29,61 @@ namespace Sibers.DbStuff.Repository
 
         public IEnumerable<Employee> GetAllEmployeesOutsideTheProject(long projectId)
         {
-            return _context.Employees
-                .ToList()
-                .Where(emp => 
-                !GetAllEmployeesFromTheProject(projectId)
-                .Select(x => x.Employee)
-                .Select(emp2 => emp2.Id)
-                .Contains(emp.Id))
-                .ToList();
+            var project = _context.Projects.SingleOrDefault(x => x.Id == projectId);
+            var employeeOnProject = GetAllEmployeesFromTheProject(projectId).Select(x => x.Employee).ToList();
+            var result = _context.Employees.ToList();
+            result.RemoveAll(emp1 => employeeOnProject.Exists(emp2 => emp2.Id == emp1.Id));
+            result.RemoveAll(x => x.Company != project.ExecutingCompanyId);
+            return result;
+
         }
 
-        public void Save(EmployeeProject model)
+        public string Save(EmployeeProject model)
         {
-            _dbSet.Add(model);
-            _context.SaveChanges();
+            try
+            {
+                _dbSet.Add(model);
+                _context.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                return exception.Message;
+            }
+            return "Success";
         }
 
-        public void Delete(long employeeId, long projectId)
+        public string Delete(long employeeId, long projectId)
         {
-            var model = Get(employeeId, projectId);
-            _dbSet.Remove(model);
-            _context.SaveChanges();
+            try
+            {
+                var model = Get(employeeId, projectId);
+                _dbSet.Remove(model);
+                _context.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                return exception.Message;
+            }
+            return "Success";
         }
 
-        public void Add(EmployeeProject model)
+        public string Add(EmployeeProject model)
         {
-            _dbSet.Add(model);
-            _context.SaveChanges();
+            try
+            {
+                var employeeCompany = _context.Employees.Find(model.EmployeeId).Company;
+                var projectCompany = _context.Projects.Find(model.ProjectId).ExecutingCompanyId;
+                if (employeeCompany != projectCompany)
+                    throw new Exception("Для выполнения задачи сотрудник должен работать на компанию");
+
+                _dbSet.Add(model);
+                _context.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                return exception.Message;
+            }
+            return "Success";
         }
 
         public EmployeeProject Get(long employeeId, long projectId)

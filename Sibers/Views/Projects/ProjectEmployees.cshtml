@@ -7,7 +7,7 @@
             <table class="table-content">
                 <thead id="table-head">
                     <tr class="sticky white-oswald blue-background">
-                        <th>@Html.DisplayNameFor(x => x.ProjectName)</th>
+                        <th>Сотрудники на проекте</th>
                         <th />
                     </tr>
                 </thead>
@@ -19,7 +19,7 @@
                             <tr class="inside-project">
                                 <td>@employeeInside.FullName</td>
                                 <td>
-                                    @Html.ActionLink("Удалить", "DeleteFromProject", new { projectId = Model.ProjectId, employeeId = employeeInside.Id  })
+                                    @Html.ActionLink("Удалить с проекта", "DeleteFromProject", new { projectId = Model.ProjectId, employeeId = employeeInside.Id  })
                                 </td>
                             </tr>
                         }
@@ -31,13 +31,11 @@
                             <tr class="outside-project">
                                 <td>@employeeOutside.FullName</td>
                                 <td>
-                                    @Html.ActionLink("Добавить", "AssignToProject", new { projectId = Model.ProjectId, employeeId = employeeOutside.Id })
+                                    @Html.ActionLink("Добавить на проект", "AssignToProject", new { projectId = Model.ProjectId, employeeId = employeeOutside.Id })
                                 </td>
                             </tr>
                         }
                     }
-
-
                 </tbody>
                 <tfoot>
                     <tr>

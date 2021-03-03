@@ -26,28 +26,52 @@ namespace Sibers.DbStuff.Repository
             return _dbSet.ToList();
         }
 
-        public void Save(Model model)
+        public virtual string Save(Model model)
         {
-            if (model.Id > 0)
+            try
             {
-                _dbSet.Update(model);
+                if (model.Id > 0)
+                {
+                    _dbSet.Update(model);
+                    _context.SaveChanges();
+                    return "Success";
+                }
+                _dbSet.Add(model);
                 _context.SaveChanges();
-                return;
             }
-            _dbSet.Add(model);  
-            _context.SaveChanges();
+            catch (System.Exception exception)
+            {
+                return exception.Message;
+            }
+            return "Success";
         }
 
-        public void Delete(long id)
+        public string Delete(long id)
         {
-            var model = Get(id);
-            _dbSet.Remove(model);
-            _context.SaveChanges();
+            try
+            {
+                var model = Get(id);
+                _dbSet.Remove(model);
+                _context.SaveChanges();
+            }
+            catch (System.Exception exception)
+            {
+                return exception.Message;
+            }
+            return "Success";
         }
-        public void Delete(Model model)
+        public string Delete(Model model)
         {
-            _dbSet.Remove(model);
-            _context.SaveChanges();
+            try
+            {
+                _dbSet.Remove(model);
+                _context.SaveChanges();
+            }
+            catch (System.Exception exception)
+            {
+                return exception.Message;
+            }
+            return "Success";
         }
     }
 }

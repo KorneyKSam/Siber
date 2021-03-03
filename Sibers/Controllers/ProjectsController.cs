@@ -24,7 +24,7 @@ namespace Sibers.Controllers
             Customer_Company_Repository customerCompanyRepository,
             Executing_Company_Repository executingCompanyRepository,
             Employee_Repository employeeRepository,
-            DbStuff.Repository.Employee_Project_Repository employeeProjectRepository,
+            Employee_Project_Repository employeeProjectRepository,
             IMapper mapper)
         {
             _projectRepository = repository;
@@ -53,17 +53,36 @@ namespace Sibers.Controllers
         {
             var dbModel = _projectRepository.Get(id);
             var viewModel = _mapper.Map<ProjectViewModel>(dbModel);
+            FillViewBags(viewModel);
+            return View(viewModel);
+        }
 
+        [HttpPost]
+        public IActionResult ChangeRow(ProjectViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                FillViewBags(viewModel);
+                return View(viewModel);
+            }
+            viewModel.DateTimeOfCreation = DateTime.Now;
+            var dbModel = _mapper.Map<Project>(viewModel);
+            var message = _projectRepository.Save(dbModel);
+            if (message != "Success")
+                TempData["Message"] = message;
+            return RedirectToAction("Table");
+        }
+
+        public void FillViewBags(ProjectViewModel viewModel)
+        {
             var customerCompanies = _customerCompanyRepository.GetAll();
-            customerCompanies.Insert(0, new CustomerCompany() { CompanyName = "Выберите компанию исполнителя", Id = 0 });
             ViewBag.CustomerCompanies = customerCompanies;
 
             var executingCompanies = _executingCompanyRepository.GetAll();
-            executingCompanies.Insert(0, new ExecutingCompany() { CompanyName = "Выберите компанию заказчика", Id = 0 });
             ViewBag.ExecutingCompanies = executingCompanies;
 
             var employeesDBModels = _employeeRepository.GetAll();
-            employeesDBModels.Insert(0, new Employee() { LastName = "Выберите руководителя проекта", Id = 0 });
+
             var employeeViewModels = new List<EmployeeFullNameViewModel>();
             foreach (var employeeDbModel in employeesDBModels)
             {
@@ -73,20 +92,6 @@ namespace Sibers.Controllers
                 employeeViewModels.Add(model);
             }
             ViewBag.Leader = employeeViewModels;
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public IActionResult ChangeRow(ProjectViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
-            viewModel.DateTimeOfCreation = DateTime.Now;
-            var dbModel = _mapper.Map<Project>(viewModel);
-            _projectRepository.Save(dbModel);
-            return RedirectToAction("Table");
         }
 
         [HttpGet]
@@ -101,7 +106,9 @@ namespace Sibers.Controllers
         public IActionResult DeleteRow(ProjectViewModel viewModel)
         {
             var dbModel = _mapper.Map<Project>(viewModel);
-            _projectRepository.Delete(dbModel);
+            var message = _projectRepository.Delete(dbModel);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("Table");
         }
 
@@ -141,7 +148,9 @@ namespace Sibers.Controllers
 
         public ActionResult DeleteFromProject(long projectId, long employeeId)
         {
-            _employeeProjectRepository.Delete(employeeId, projectId);
+            var message = _employeeProjectRepository.Delete(employeeId, projectId);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("ProjectEmployees", new { @projectId = projectId });
         }
 
@@ -153,7 +162,9 @@ namespace Sibers.Controllers
                 ProjectId = projectId,
                 EmployeeId = employeeid
             };
-            _employeeProjectRepository.Add(dbmodel);
+            var message = _employeeProjectRepository.Add(dbmodel);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("ProjectEmployees", new { @projectId = projectId });
         }
 

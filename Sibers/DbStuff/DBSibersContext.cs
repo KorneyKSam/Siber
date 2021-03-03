@@ -34,7 +34,7 @@ namespace Sibers.DbStuff
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Description).HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(250);
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -56,11 +56,11 @@ namespace Sibers.DbStuff
 
                 entity.Property(e => e.MiddleName).HasMaxLength(50);
 
-                entity.HasOne(d => d.CustomerCompany)
+                entity.HasOne(d => d.ExecutingCompany)
                       .WithMany(p => p.Employees)
                       .HasForeignKey(d => d.Company)
                       .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("FK_Employees_CustomerCompanies");
+                      .HasConstraintName("FK_Employee_ExecutingCompany");
             });
 
             modelBuilder.Entity<EmployeeProject>(entity =>
@@ -96,7 +96,7 @@ namespace Sibers.DbStuff
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Description).HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(250);
             });
 
             modelBuilder.Entity<Project>(entity =>

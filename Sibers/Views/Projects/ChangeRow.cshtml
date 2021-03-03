@@ -7,23 +7,24 @@
             <div class="static-field white-oswald blue-background">Название проекта</div>
             <div class="field">
                 <input asp-for="ProjectName" placeholder="Введите название" />
-
+                <span>@Html.ValidationMessageFor(x => x.ProjectName)</span>
             </div>
             <div class="static-field white-oswald blue-background">Компания исполнитель</div>
             <div class="field">
-                <select asp-for="ExecutingCompanyId" asp-items="@(new SelectList(@ViewBag.ExecutingCompanies, "Id", "CompanyName"))">
-                </select>
+                <select asp-for="ExecutingCompanyId" asp-items="@(new SelectList(@ViewBag.ExecutingCompanies, "Id", "CompanyName"))"></select>
+                <span>@Html.ValidationMessageFor(x => x.ExecutingCompanyId)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Компания заказчик</div>
             <div class="field">
-                <select asp-for="CustomerCompanyId" asp-items="@(new SelectList(@ViewBag.CustomerCompanies, "Id", "CompanyName"))">
-                </select>
+                <select asp-for="CustomerCompanyId" asp-items="@(new SelectList(@ViewBag.CustomerCompanies, "Id", "CompanyName"))"></select>
+                <span>@Html.ValidationMessageFor(x => x.CustomerCompanyId)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Приоритет</div>
             <div class="field">
                 <input asp-for="ProjectPriority" placeholder="Введите приоритет" />
+                <span>@Html.ValidationMessageFor(x => x.ProjectPriority)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Дата начала</div>
@@ -35,12 +36,13 @@
             <div class="static-field white-oswald blue-background">Дата окончания</div>
             <div class="field">
                 <input type="datetime" asp-for="EndDate" placeholder="Введите дату" />
+                <span>@Html.ValidationMessageFor(x => x.EndDate)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Руководитель проекта</div>
             <div class="field">
-                <select asp-for="ProjectLeaderId" asp-items="@(new SelectList(@ViewBag.Leader, "Id", "FullName"))">
-                </select>
+                <select asp-for="ProjectLeaderId" asp-items="@(new SelectList(@ViewBag.Leader, "Id", "FullName"))"></select>
+                <span>@Html.ValidationMessageFor(x => x.ProjectLeaderId)</span>
             </div>
 
             <div class="dialog-buttons tends-to-center">

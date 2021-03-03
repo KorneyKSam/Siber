@@ -19,7 +19,7 @@ namespace Sibers.DbStuff.Models
         public long Company { get; set; }
         public DateTime DateTimeOfCreation { get; set; }
 
-        public virtual CustomerCompany CustomerCompany { get; set; }
+        public virtual ExecutingCompany ExecutingCompany { get; set; }
         public virtual ICollection<EmployeeProject> EmployeesProjects { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
     }

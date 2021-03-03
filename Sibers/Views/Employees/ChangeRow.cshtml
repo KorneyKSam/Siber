@@ -14,24 +14,26 @@
             <div class="static-field white-oswald blue-background">Имя</div>
             <div class="field">
                 <input asp-for="FirstName" placeholder="Введите имя" />
+                <span>@Html.ValidationMessageFor(x => x.FirstName)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Отчество</div>
             <div class="field">
                 <input asp-for="MiddleName" placeholder="Введите отчество" />
+                <span>@Html.ValidationMessageFor(x => x.MiddleName)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Почта</div>
             <div class="field">
                 <input asp-for="Email" placeholder="Введите почту" />
+                <span>@Html.ValidationMessageFor(x => x.Email)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Компания</div>
             <div class="field">
-                <select asp-for="Company" asp-items="@(new SelectList(@ViewBag.Companies, "Id", "CompanyName"))">
-                </select>
+                <select asp-for="Company" asp-items="@(new SelectList(@ViewBag.Companies, "Id", "CompanyName"))"></select>
+                <span>@Html.ValidationMessageFor(x => x.Company)</span>
             </div>
-
             <div class="dialog-buttons tends-to-center">
                 <input class="white-oswald blue-btn" type="submit" value="Сохранить" />
                 <a class="white-oswald blue-btn" asp-action="Table">Отменить</a>

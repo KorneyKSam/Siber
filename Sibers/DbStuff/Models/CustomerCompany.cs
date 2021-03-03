@@ -16,7 +16,5 @@ namespace Sibers.DbStuff.Models
         public string Description { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
-
-        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

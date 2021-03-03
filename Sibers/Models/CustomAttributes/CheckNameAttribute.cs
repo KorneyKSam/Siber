@@ -19,17 +19,13 @@ namespace Sibers.Models.CustomAttributes
         public override bool IsValid(object value)
         {
             if (value != null && !(value is string))
-            {
                 throw new Exception("This attribute must be applied only for string fields");
-            }
 
             if(value == null)
-            {
                 return false;
-            }
 
             var str = (string)value;
-            //Check that name has one ore more capital letter
+            //Check the name has one ore more capital letter
             return str.ToLower() != str;
         }
 

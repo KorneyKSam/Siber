@@ -11,14 +11,14 @@ namespace Sibers.Controllers
 {
     public class EmployeesController : Controller
     {
-        private Customer_Company_Repository _customerCompanyRepository;
+        private Executing_Company_Repository _executingCompanyRepository;
         private Employee_Repository _employeeRepository;
         private IMapper _mapper;
 
-        public EmployeesController(Employee_Repository employeeRepository, Customer_Company_Repository customerCompanyRepository, IMapper mapper)
+        public EmployeesController(Employee_Repository employeeRepository, Executing_Company_Repository executingCompanyRepository, IMapper mapper)
         {
-            _employeeRepository = employeeRepository ;
-            _customerCompanyRepository = customerCompanyRepository;
+            _employeeRepository = employeeRepository;
+            _executingCompanyRepository = executingCompanyRepository;
             _mapper = mapper;
         }
 
@@ -39,12 +39,15 @@ namespace Sibers.Controllers
         {
             var dbModel = _employeeRepository.Get(id);
             var viewModel = _mapper.Map<EmployeeViewModel>(dbModel);
-
-            var companies = _customerCompanyRepository.GetAll();
-            companies.Insert(0, new CustomerCompany() { CompanyName = "Выберите компанию", Id = 0 });
-            ViewBag.companies = companies;
-
+            FillViewBag();
             return View(viewModel);
+        }
+
+        private void FillViewBag()
+        {
+            var companies = _executingCompanyRepository.GetAll();
+            companies.Insert(0, new ExecutingCompany() { CompanyName = "Выберите компанию", Id = 0 });
+            ViewBag.companies = companies;
         }
 
         [HttpPost]
@@ -52,11 +55,14 @@ namespace Sibers.Controllers
         {
             if (!ModelState.IsValid)
             {
+                FillViewBag();
                 return View(viewModel);
             }
             viewModel.DateTimeOfCreation = DateTime.Now;
             var dbModel = _mapper.Map<Employee>(viewModel);
-            _employeeRepository.Save(dbModel);
+            var message = _employeeRepository.Save(dbModel);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("Table");
         }
 
@@ -72,7 +78,9 @@ namespace Sibers.Controllers
         public IActionResult DeleteRow(EmployeeViewModel viewModel)
         {
             var dbModel = _mapper.Map<Employee>(viewModel);
-            _employeeRepository.Delete(dbModel);
+            var message = _employeeRepository.Delete(dbModel);
+            if (message != "Success")
+                TempData["Message"] = message;
             return RedirectToAction("Table");
         }
 
