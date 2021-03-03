@@ -42,6 +42,11 @@
 }
 
 
+
+.input-validation-error {
+    border-color: red;
+}
+
 header {
     height: 10vh;
     background: black;
@@ -153,13 +158,21 @@ header {
         border-bottom: 1px solid #dddddd;
     }
 
-        .table-content tbody tr:nth-of-type(even) {
-            background-color: #f3f3f3;
-        }
-
         .table-content tbody tr:last-of-type {
             border-bottom: 2px solid rgba(35, 138, 235, .7);
         }
+
+.change-color-for-even tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.inside-project {
+    background-color: rgba(35, 135, 235, .6);
+}
+
+.outside-project {
+    background-color: rgba(255, 33, 41, .6);
+}
 
 .table-text {
     font-family: sans-serif;
@@ -173,16 +186,15 @@ header {
     font-size: 25px;
 }
 
-.table-change-row:hover {
-    font-weight: bold;
-    color: rgb(28, 110, 188);
-}
+    .table-change-row:hover {
+        font-weight: bold;
+        color: rgb(28, 110, 188);
+    }
 
-.table-delete-row:hover {
-    font-weight: bold;
-    color: darkred;
-}
-
+    .table-delete-row:hover {
+        font-weight: bold;
+        color: darkred;
+    }
 
 .tends-to-center {
     width: 100%;
@@ -195,10 +207,11 @@ header {
 .blue-border {
     border-bottom: 2px solid rgba(35, 138, 235, .7);
     box-shadow: 0px 3px 7px #251d1b;
+    margin: 10px;
 }
 
 
-.dialog-buttons{
+.dialog-buttons {
     margin-top: 30px;
 }
 
@@ -207,20 +220,27 @@ header {
     flex-direction: column;
 }
 
-.field{
+.field {
     margin-bottom: 25px;
     display: flex;
     flex-direction: column;
-    flex:1;
+    flex: 1;
 }
 
-.form-group{
+.form-group {
     max-height: 700px;
     max-width: 700px;
     min-height: 250px;
     min-width: 250px;
 }
 
+#projectForm {
+    display: flex;
+}
+
+.column {
+    flex: 30%;
+}
 
 .sticky {
     position: sticky;
@@ -228,6 +248,7 @@ header {
     top: 0px;
     z-index: 10;
 }
+
 
 main {
     height: 80vh;

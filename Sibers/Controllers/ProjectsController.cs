@@ -1,33 +1,37 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sibers.DbStuff.Models;
 using Sibers.DbStuff.Repository;
-using Sibers.Models;
+using Sibers.Models.Employee;
+using Sibers.Models.ExecutingCompany;
+using Sibers.Models.Project;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sibers.Controllers
 {
     public class ProjectsController : Controller
     {
-        private ProjectRepository _projectRepository;
-        private CustomerCompanyRepository _customerCompanyRepository;
-        private ExecutingCompanyRepository _executingCompanyRepository;
-        private EmployeeRepository _employeeRepository;
+        private Project_Repository _projectRepository;
+        private Customer_Company_Repository _customerCompanyRepository;
+        private Executing_Company_Repository _executingCompanyRepository;
+        private Employee_Repository _employeeRepository;
+        private DbStuff.Repository.Employee_Project_Repository _employeeProjectRepository;
         private IMapper _mapper;
 
-        public ProjectsController(ProjectRepository repository,
-            CustomerCompanyRepository customerCompanyRepository,
-            ExecutingCompanyRepository executingCompanyRepository,
-            EmployeeRepository employeeRepository,
+        public ProjectsController(Project_Repository repository,
+            Customer_Company_Repository customerCompanyRepository,
+            Executing_Company_Repository executingCompanyRepository,
+            Employee_Repository employeeRepository,
+            DbStuff.Repository.Employee_Project_Repository employeeProjectRepository,
             IMapper mapper)
         {
             _projectRepository = repository;
             _customerCompanyRepository = customerCompanyRepository;
             _executingCompanyRepository = executingCompanyRepository;
             _employeeRepository = employeeRepository;
+            _employeeProjectRepository = employeeProjectRepository;
             _mapper = mapper;
         }
 
@@ -75,6 +79,10 @@ namespace Sibers.Controllers
         [HttpPost]
         public IActionResult ChangeRow(ProjectViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
             viewModel.DateTimeOfCreation = DateTime.Now;
             var dbModel = _mapper.Map<Project>(viewModel);
             _projectRepository.Save(dbModel);
@@ -98,12 +106,56 @@ namespace Sibers.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProjectInfo(long id)
+        public IActionResult ProjectEmployees(long projectId)
         {
-            var dbModel = _projectRepository.Get(id);
-            //EmployeeFullNameViewModel
-            var viewModel = _mapper.Map<ProjectInfoViewModel>(dbModel);
-            return View(viewModel);
+            var employeesInsideProjectsDbModel = _employeeProjectRepository.GetAllEmployeesFromTheProject(projectId);
+            var employeesInsideProjectViewModel = new List<EmployeeFullNameViewModel>();
+            foreach (var dbModel in employeesInsideProjectsDbModel)
+            {
+                var viewModel = new EmployeeFullNameViewModel();
+                viewModel.Id = dbModel.EmployeeId;
+                viewModel.FullName = $"{dbModel.Employee.LastName} {dbModel.Employee.FirstName} {dbModel.Employee.MiddleName}";
+                employeesInsideProjectViewModel.Add(viewModel);
+            }
+
+            var employeesOutsideProjectsDbModel = _employeeProjectRepository.GetAllEmployeesOutsideTheProject(projectId);
+            var employeesOutsideProjectViewModel = new List<EmployeeFullNameViewModel>();
+            foreach (var dbModel in employeesOutsideProjectsDbModel)
+            {
+                var viewModel = new EmployeeFullNameViewModel();
+                viewModel.Id = dbModel.Id;
+                viewModel.FullName = $"{dbModel.LastName} {dbModel.FirstName} {dbModel.MiddleName}";
+                employeesOutsideProjectViewModel.Add(viewModel);
+            }
+
+            var employeeProjectViewModel = new EmployeeProjectViewModel()
+            {
+                ProjectId = projectId,
+                ProjectName = _projectRepository.GetProjectName(projectId),
+                EmployeesInsideTheProjectViews = employeesInsideProjectViewModel,
+                EmployeesOutsideTheProjectViewModels = employeesOutsideProjectViewModel
+            };
+
+            return View(employeeProjectViewModel);
         }
+
+        public ActionResult DeleteFromProject(long projectId, long employeeId)
+        {
+            _employeeProjectRepository.Delete(employeeId, projectId);
+            return RedirectToAction("ProjectEmployees", new { @projectId = projectId });
+        }
+
+        public ActionResult AssignToProject(long projectId, long employeeid)
+        {
+            var dbmodel = new EmployeeProject()
+            {
+                DateTimeOfCreation = DateTime.Now,
+                ProjectId = projectId,
+                EmployeeId = employeeid
+            };
+            _employeeProjectRepository.Add(dbmodel);
+            return RedirectToAction("ProjectEmployees", new { @projectId = projectId });
+        }
+
     }
 }

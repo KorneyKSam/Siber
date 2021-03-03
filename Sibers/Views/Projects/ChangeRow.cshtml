@@ -1,4 +1,5 @@
-﻿@model ProjectViewModel
+﻿@using Sibers.Models.Project
+@model ProjectViewModel
 
 <div class="tends-to-center">
     <form class="form-group blue-border" asp-controller="Projects" asp-action="ChangeRow" asp-antiforgery="true">
@@ -6,8 +7,8 @@
             <div class="static-field white-oswald blue-background">Название проекта</div>
             <div class="field">
                 <input asp-for="ProjectName" placeholder="Введите название" />
-            </div>
 
+            </div>
             <div class="static-field white-oswald blue-background">Компания исполнитель</div>
             <div class="field">
                 <select asp-for="ExecutingCompanyId" asp-items="@(new SelectList(@ViewBag.ExecutingCompanies, "Id", "CompanyName"))">
@@ -28,6 +29,7 @@
             <div class="static-field white-oswald blue-background">Дата начала</div>
             <div class="field">
                 <input type="datetime" asp-for="StartDate" placeholder="Введите дату" />
+                <span>@Html.ValidationMessageFor(x => x.StartDate)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Дата окончания</div>

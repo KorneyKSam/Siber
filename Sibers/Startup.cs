@@ -9,12 +9,18 @@ using Sibers.DbStuff;
 using Sibers.DbStuff.Models;
 using Sibers.DbStuff.Repository;
 using Sibers.Models;
+using Sibers.Models.Authorization;
+using Sibers.Models.CustomerCompany;
+using Sibers.Models.Employee;
+using Sibers.Models.ExecutingCompany;
+using Sibers.Models.Project;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Sibers
 {
     public class Startup
     {
+        public const string AuthMethod = "CookieAuth";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +33,14 @@ namespace Sibers
         {
             var connectionString = @"Server=NOONE\SQLEXPRESS;Database=DBSibers;Trusted_Connection=True;";
             services.AddDbContext<DBSibersContext>(option => option.UseSqlServer(connectionString));
+
+            services.AddAuthentication(AuthMethod).AddCookie(AuthMethod, config =>
+            {
+                config.Cookie.Name = "User.Sibers";
+                config.LoginPath = "/Authorization/SignIn";
+                config.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
             RegistrationMapper(services);            
             RegistrationRepository(services);
             services.AddControllersWithViews();
@@ -48,12 +62,8 @@ namespace Sibers
             configurationExpression.CreateMap<Employee, EmployeeViewModel>();
             configurationExpression.CreateMap<EmployeeViewModel, Employee>();
 
-
             configurationExpression.CreateMap<Project, ProjectViewModel>();
             configurationExpression.CreateMap<ProjectViewModel, Project>();
-
-            configurationExpression.CreateMap<Project, ProjectInfoViewModel>();
-            configurationExpression.CreateMap<ProjectInfoViewModel, Project>();
 
             var mapperConfiguration = new MapperConfiguration(configurationExpression);
             var mapper = new Mapper(mapperConfiguration);
@@ -62,11 +72,12 @@ namespace Sibers
 
         public void RegistrationRepository(IServiceCollection services)
         {
-            services.AddScoped<UserRepository>(serviceProvider => new UserRepository(serviceProvider.GetService<DBSibersContext>()));
-            services.AddScoped<CustomerCompanyRepository>(serviceProvider => new CustomerCompanyRepository(serviceProvider.GetService<DBSibersContext>()));
-            services.AddScoped<EmployeeRepository>(serviceProvider => new EmployeeRepository(serviceProvider.GetService<DBSibersContext>()));
-            services.AddScoped<ProjectRepository>(serviceProvider => new ProjectRepository(serviceProvider.GetService<DBSibersContext>()));
-            services.AddScoped<ExecutingCompanyRepository>(serviceProvider => new ExecutingCompanyRepository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<User_Repository>(serviceProvider => new User_Repository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<Customer_Company_Repository>(serviceProvider => new Customer_Company_Repository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped(serviceProvider => new DbStuff.Repository.Employee_Project_Repository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<Employee_Repository>(serviceProvider => new Employee_Repository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<Project_Repository>(serviceProvider => new Project_Repository(serviceProvider.GetService<DBSibersContext>()));
+            services.AddScoped<Executing_Company_Repository>(serviceProvider => new Executing_Company_Repository(serviceProvider.GetService<DBSibersContext>()));
         }
 
 
@@ -80,16 +91,13 @@ namespace Sibers
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

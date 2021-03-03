@@ -1,4 +1,5 @@
-﻿@model List<ProjectViewModel>
+﻿@using Sibers.Models.Project
+@model List<ProjectViewModel>
 @{
     ViewData["Title"] = "Проекты";
 }
@@ -7,61 +8,63 @@
     <h1 id="table-title">Проекты</h1>
     <div class="tends-to-center" id="table-wrapper">
         <div id="table-scroll">
-            <table class="table-content">
-                <thead id="table-head">
-                    <tr class="sticky white-oswald blue-background">
-                        <th>Название проекта</th>
-                        <th>Компания исполнитель</th>
-                        <th>Компания заказчик</th>
-                        <th>Приоритет</th>
-                        <th>Дата начала</th>
-                        <th>Дата окончания</th>
-                        <th>Руководитель проекта</th>
-                        <th />
-                        <th />
-                        <th />
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model != null)
-                    {
-                        @foreach (var project in Model)
+            <form asp-controller="Projects" asp-action="Table">
+                <table class="table-content">
+                    <thead id="table-head">
+                        <tr class="sticky white-oswald blue-background">
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.ProjectName)</th>
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.ExecutingCompanyId)</th>
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.CustomerCompanyId)</th>
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.ProjectPriority)</th>
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.StartDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.EndDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.GetEnumerator().Current.ProjectLeaderId)</th>
+                            <th />
+                            <th />
+                            <th />
+                        </tr>
+                    </thead>
+                    <tbody class="change-color-for-even">
+                        @if (Model != null)
                         {
-                            <tr>
-                                <td>@project.ProjectName</td>
-                                <td>@project.ExecutingCompany.CompanyName</td>
-                                <td>@project.CustomerCompany.CompanyName</td>
-                                <td>@project.ProjectPriority</td>
-                                <td>@project.StartDate</td>
-                                <td>@project.EndDate</td>
-                                <td>@project.ProjectLeader.LastName @project.ProjectLeader.FirstName @project.ProjectLeader.MiddleName</td>
-                                <td>
-                                    <a class="table-change-row" asp-controller="Projects" asp-action="ChangeRow" asp-route-id="@project.Id">
-                                        +
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="table-delete-row" asp-controller="Projects" asp-action="DeleteRow" asp-route-id="@project.Id">
-                                        -
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="table-info-row" asp-controller="Projects" asp-action="ProjectInfo" asp-route-id="@project.Id">
-                                        ?
-                                    </a>
-                                </td>
-                            </tr>
+                            @foreach (var project in Model)
+                            {
+                                <tr>
+                                    <td>@project.ProjectName</td>
+                                    <td>@project.ExecutingCompany.CompanyName</td>
+                                    <td>@project.CustomerCompany.CompanyName</td>
+                                    <td>@project.ProjectPriority</td>
+                                    <td>@project.StartDate</td>
+                                    <td>@project.EndDate</td>
+                                    <td>@project.ProjectLeader.LastName @project.ProjectLeader.FirstName @project.ProjectLeader.MiddleName</td>
+                                    <td>
+                                        <a class="table-change-row" asp-controller="Projects" asp-action="ChangeRow" asp-route-id="@project.Id">
+                                            +
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="table-delete-row" asp-controller="Projects" asp-action="DeleteRow" asp-route-id="@project.Id">
+                                            -
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="table-info-row" asp-controller="Projects" asp-action="ProjectEmployees" asp-route-projectId="@project.Id">
+                                            ?
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td class="last-row">
-                            <a class="table-text" asp-controller="Projects" asp-action="ChangeRow">Создать новую запись</a>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="last-row">
+                                <a class="table-text" asp-controller="Projects" asp-action="ChangeRow">Создать новую запись</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
         </div>
     </div>
 </div>

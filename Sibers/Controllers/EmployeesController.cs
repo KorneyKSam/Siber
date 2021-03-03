@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sibers.DbStuff.Models;
 using Sibers.DbStuff.Repository;
 using Sibers.Models;
+using Sibers.Models.Employee;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +11,11 @@ namespace Sibers.Controllers
 {
     public class EmployeesController : Controller
     {
-        private CustomerCompanyRepository _customerCompanyRepository;
-        private EmployeeRepository _employeeRepository;
+        private Customer_Company_Repository _customerCompanyRepository;
+        private Employee_Repository _employeeRepository;
         private IMapper _mapper;
 
-        public EmployeesController(EmployeeRepository employeeRepository, CustomerCompanyRepository customerCompanyRepository, IMapper mapper)
+        public EmployeesController(Employee_Repository employeeRepository, Customer_Company_Repository customerCompanyRepository, IMapper mapper)
         {
             _employeeRepository = employeeRepository ;
             _customerCompanyRepository = customerCompanyRepository;
@@ -49,6 +50,10 @@ namespace Sibers.Controllers
         [HttpPost]
         public IActionResult ChangeRow(EmployeeViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
             viewModel.DateTimeOfCreation = DateTime.Now;
             var dbModel = _mapper.Map<Employee>(viewModel);
             _employeeRepository.Save(dbModel);

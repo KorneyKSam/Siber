@@ -4,6 +4,7 @@ using Sibers.DbStuff;
 using Sibers.DbStuff.Models;
 using Sibers.DbStuff.Repository;
 using Sibers.Models;
+using Sibers.Models.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,10 @@ namespace Sibers.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private UserRepository _userRepository;
+        private User_Repository _userRepository;
         private IMapper _mapper;
 
-        public AuthorizationController(UserRepository userRepository, IMapper mapper)
+        public AuthorizationController(User_Repository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

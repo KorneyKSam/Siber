@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sibers.Models
+namespace Sibers.Models.ExecutingCompany
 {
-    public class CustomerCompanyViewModel
+    public class ExecutingCompanyViewModel
     {
         public long Id { get; set; }
         public string CompanyName { get; set; }

@@ -86,5 +86,4 @@ D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Employees\ChangeRow.cshtml.
 D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Employees\DeleteRow.cshtml.g.cs
 D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Projects\ChangeRow.cshtml.g.cs
 D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Projects\DeleteRow.cshtml.g.cs
-D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Projects\AssignToProject.cshtml.g.cs
-D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Projects\ProjectInfo.cshtml.g.cs
+D:\GitHub\Sibers\Sibers\obj\Debug\net5.0\Razor\Views\Projects\ProjectEmployees.cshtml.g.cs

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sibers.DbStuff.Models;
 using Sibers.DbStuff.Repository;
 using Sibers.Models;
+using Sibers.Models.ExecutingCompany;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Sibers.Controllers
 {
     public class ExecutingCompanyController : Controller
     {
-        private ExecutingCompanyRepository _executingCompanyRepository;
+        private Executing_Company_Repository _executingCompanyRepository;
         private IMapper _mapper;
 
-        public ExecutingCompanyController(ExecutingCompanyRepository executingCompanyRepository, IMapper mapper)
+        public ExecutingCompanyController(Executing_Company_Repository executingCompanyRepository, IMapper mapper)
         {
             _executingCompanyRepository = executingCompanyRepository;
             _mapper = mapper;

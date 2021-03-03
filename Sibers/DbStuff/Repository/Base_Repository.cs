@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace Sibers.DbStuff.Repository
 {
-    public abstract class BaseRepository<Model> where Model : BaseModel
+    public abstract class Base_Repository<Model> where Model : BaseModel
     {
         protected DBSibersContext _context;
         protected DbSet<Model> _dbSet;
 
-        public BaseRepository(DBSibersContext context)
+        public Base_Repository(DBSibersContext context)
         {
             _context = context;
             _dbSet = context.Set<Model>();

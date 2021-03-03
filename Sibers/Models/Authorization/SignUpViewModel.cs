@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sibers.Models
+namespace Sibers.Models.Authorization
 {
     public class SignUpViewModel
     {

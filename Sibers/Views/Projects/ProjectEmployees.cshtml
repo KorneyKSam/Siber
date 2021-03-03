@@ -1,0 +1,52 @@
+﻿@using Sibers.Models.Project
+@model EmployeeProjectViewModel
+
+<div class="tends-to-center" id="table-wrapper">
+    <div id="table-scroll">
+        <form asp-controller="Projects" asp-action="ProjectEmployees">
+            <table class="table-content">
+                <thead id="table-head">
+                    <tr class="sticky white-oswald blue-background">
+                        <th>@Html.DisplayNameFor(x => x.ProjectName)</th>
+                        <th />
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.EmployeesInsideTheProjectViews != null)
+                    {
+                        @foreach (var employeeInside in Model.EmployeesInsideTheProjectViews)
+                        {
+                            <tr class="inside-project">
+                                <td>@employeeInside.FullName</td>
+                                <td>
+                                    @Html.ActionLink("Удалить", "DeleteFromProject", new { projectId = Model.ProjectId, employeeId = employeeInside.Id  })
+                                </td>
+                            </tr>
+                        }
+                    }
+                    @if (Model.EmployeesOutsideTheProjectViewModels != null)
+                    {
+                        @foreach (var employeeOutside in Model.EmployeesOutsideTheProjectViewModels)
+                        {
+                            <tr class="outside-project">
+                                <td>@employeeOutside.FullName</td>
+                                <td>
+                                    @Html.ActionLink("Добавить", "AssignToProject", new { projectId = Model.ProjectId, employeeId = employeeOutside.Id })
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="last-row">
+                            <a class="white-oswald blue-btn" asp-action="Table">Назад</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>

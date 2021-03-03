@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sibers.DbStuff.Models;
 using Sibers.DbStuff.Repository;
 using Sibers.Models;
+using Sibers.Models.CustomerCompany;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Sibers.Controllers
 {
     public class CustomerCompanyController : Controller
     {
-        private CustomerCompanyRepository _customerCompanyRepository;
+        private Customer_Company_Repository _customerCompanyRepository;
         private IMapper _mapper;
 
-        public CustomerCompanyController(CustomerCompanyRepository customerCompanyRepository, IMapper mapper)
+        public CustomerCompanyController(Customer_Company_Repository customerCompanyRepository, IMapper mapper)
         {
             _customerCompanyRepository = customerCompanyRepository;
             _mapper = mapper;

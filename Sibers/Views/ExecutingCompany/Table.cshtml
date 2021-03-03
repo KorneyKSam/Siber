@@ -1,4 +1,5 @@
-﻿@model List<ExecutingCompanyViewModel>
+﻿@using Sibers.Models.ExecutingCompany
+@model List<ExecutingCompanyViewModel>
 @{
     ViewData["Title"] = "Компании исполнители";
 }
@@ -16,7 +17,7 @@
                         <th />
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="change-color-for-even">
                     @if (Model != null)
                     {
                         @foreach (var company in Model)

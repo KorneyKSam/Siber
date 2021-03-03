@@ -1,4 +1,5 @@
-﻿@model EmployeeViewModel
+﻿@using Sibers.Models.Employee
+@model EmployeeViewModel
 
 <div class="tends-to-center">
     <form class="form-group blue-border" asp-controller="Employees" asp-action="ChangeRow" asp-antiforgery="true">
@@ -7,6 +8,7 @@
             <div class="static-field white-oswald blue-background">Фамилия</div>
             <div class="field">
                 <input asp-for="LastName" placeholder="Введите фамилию" />
+                <span>@Html.ValidationMessageFor(x => x.LastName)</span>
             </div>
 
             <div class="static-field white-oswald blue-background">Имя</div>
